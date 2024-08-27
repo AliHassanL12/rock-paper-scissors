@@ -17,7 +17,30 @@
 */
 
 function getComputerChoice() {
-    const randomNumberGenerator = Math.floor(Math.random() * 3) + 1;
+    const randomNumberGenerator = Math.floor(Math.random() * 3) + 1; //Random Number between 1 and 3
     return (randomNumberGenerator === 1) ? 'Rock' : 
-    (randomNumberGenerator === 2) ? 'Paper' : 'Scissors';
+    (randomNumberGenerator === 2) ? 'Paper' : 'Scissors'; 
+}
+
+/* Create a function getHumanChoice that returns the user's choice between
+   'Rock', 'Paper', 'Scissors'.
+
+   No GUI
+   Input is from user
+   Desired output is returning one of either 'Rock', 'Paper', 'Scissors' 
+   depending on the user's choice.
+
+   CREATE variable getUserChoice and GET user input.
+   IF getUserChoice equals to 'Rock' THEN
+        RETURN 'Rock'
+   IF getUserChoice equals to 'Paper' THEN
+        RETURN 'Paper'
+   IF getUserChoice equals to 'Scissors' THEN 
+        RETURN 'Scissors'
+*/
+
+function getHumanChoice() {
+    const getUserChoice = prompt('Make a selection: Rock, Paper or Scissors?');
+    return (getUserChoice.toLowerCase() === 'rock') ? 'Rock' :
+    (getUserChoice.toLowerCase() === 'paper') ? 'Paper' : 'Scissors';
 }
