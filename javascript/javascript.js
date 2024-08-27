@@ -91,7 +91,7 @@ function playRound(humanChoice, computerChoice) {
     computerChoice = computerChoice.toLowerCase();
 
     checkForWinner(humanChoice, computerChoice);
-    
+
 }
 
 function checkForWinner(humanChoice, computerChoice) {
@@ -100,41 +100,18 @@ function checkForWinner(humanChoice, computerChoice) {
     }
 
     else if (humanChoice === 'rock') {
-        switch(computerChoice) {
-            case 'paper':
-                computerScore++;
-                console.log('You Lose! Paper beats Rock');
-                break;
-            case 'scissors':
-                humanScore++;
-                console.log('You Win! Rock beats Scissors');
-                break;
-        }
+        (computerChoice === 'paper') ? (computerScore++, console.log('You Lose! Paper beats Rock')) :
+        (humanScore++, console.log('You Win! Rock beats Scissors'));
     }
 
     else if (humanChoice === 'paper') {
-        switch(computerChoice) {
-            case 'scissors':
-                computerScore++;
-                console.log('You Lose! Scissors beats Paper');
-                break;
-            case 'rock':
-                humanScore++;
-                console.log('You Win! Paper beats Rock')
-                break;
-        }
+        (computerChoice === 'scissors') ? (computerScore++, console.log('You Lose! Scissors beats Paper')) :
+        (humanScore++, console.log('You Win! Paper beats Rock'));
     }
 
     else if (humanChoice === 'scissors') {
-        switch(computerChoice) {
-            case 'rock':
-                computerScore++;
-                console.log('You Lose! Rock beats Scissors');
-                break;
-            case 'paper':
-                computerScore++;
-                console.log('You Win! Scissors beats Paper')
-        }
+        (computerChoice === 'rock') ? (computerScore++, console.log('You Lose! Rock beats Scissors')) :
+        (humanScore++, console.log('You Win! Scissors beats Paper'));
     }
 
 }
