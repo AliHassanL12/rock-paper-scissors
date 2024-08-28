@@ -38,8 +38,7 @@ function getHumanChoice() {
     return prompt('Make a selection: Rock, Paper or Scissors?');
 }
 
-let humanScore = 0;
-let computerScore = 0;
+
 
 
 /*
@@ -82,38 +81,104 @@ let computerScore = 0;
             DISPLAY 'You Win! Scissors beats Paper' 
 */
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+
 
 function playRound(humanChoice, computerChoice) {
-
     humanChoice = humanChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
 
-    checkForWinner(humanChoice, computerChoice);
+    return checkForWinner(humanChoice, computerChoice);
 
 }
 
 function checkForWinner(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
         console.log(`Draw, both of you chose ${humanChoice}`);
+        return 'Draw';
     }
 
     else if (humanChoice === 'rock') {
-        (computerChoice === 'paper') ? (computerScore++, console.log('You Lose! Paper beats Rock')) :
-        (humanScore++, console.log('You Win! Rock beats Scissors'));
+        switch (computerChoice) {
+            case 'paper':
+                console.log('You Lose! Paper beats Rock');
+                return 'computer';
+            case 'scissors':
+                console.log('You Win! Rock beats Scissors');
+                return 'human';
+        }
     }
 
     else if (humanChoice === 'paper') {
-        (computerChoice === 'scissors') ? (computerScore++, console.log('You Lose! Scissors beats Paper')) :
-        (humanScore++, console.log('You Win! Paper beats Rock'));
+        switch (computerChoice) {
+            case 'scissors':
+                console.log('You Lose! Scissors beats Paper');
+                return 'computer';
+            case 'rock':
+                console.log('You Win! Paper beats Rock')
+                return 'human';
+        }
     }
 
     else if (humanChoice === 'scissors') {
-        (computerChoice === 'rock') ? (computerScore++, console.log('You Lose! Rock beats Scissors')) :
-        (humanScore++, console.log('You Win! Scissors beats Paper'));
+        switch (computerChoice) {
+            case 'rock':
+                console.log('You Lose! Rock beats Scissors');
+                return 'computer';
+            case 'paper':
+                console.log('You Win! Scissors beats Paper');
+                return 'human';
+        }
     }
 
 }
 
-playRound(humanSelection, computerSelection);
+/*
+We have to create a function called playGame, that calls playRound 5 times and then
+declares a winner at the end and keeps track of humanScore and computerScore
+
+Input is none
+No GUI
+Desired output is a function that calls playRound 5 times, keeps track of human and 
+computer scores and ultimately declares a winner at the end
+
+CREATE variable isGameOver and SET it to false
+WHILE isGameOver is NOT TRUE 
+    CALL playRound
+    IF computerScore or humanScore EQUAL to 5 
+        SET isGameOver to TRUE
+        DISPLAY winner
+ENDWHILE
+
+*/
+
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    let humanSelection;
+    let computerSelection;
+    let roundResult;
+    let isGameContinued = true;
+
+    while (isGameContinued) {
+        humanSelection = getHumanChoice();
+        computerSelection = getComputerChoice();
+        roundResult = playRound(humanSelection, computerSelection);
+        switch (roundResult) {
+            case 'human':
+                humanScore++;
+                break;
+            case 'computer':
+                computerScore++;
+                break;
+            default:
+                break;
+        }
+        if (computerScore === 3 || humanScore === 3) {
+            isGameContinued = false; 
+        }
+    }
+
+    (humanScore === 3) ? console.log('Player Wins!') : console.log('Computer Wins!');
+}
+
+playGame();
