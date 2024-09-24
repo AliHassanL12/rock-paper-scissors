@@ -4,10 +4,6 @@ function getComputerChoice() {
     (randomNumberGenerator === 2) ? 'Paper' : 'Scissors'; 
 }
 
-function getHumanChoice() {
-    return prompt('Make a selection: Rock, Paper or Scissors?');
-}
-
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
@@ -16,42 +12,84 @@ function playRound(humanChoice, computerChoice) {
 
 }
 
+let increaseHumanScore = (function(humanScore) {
+    return function() {
+        return ++humanScore;
+    }
+}(0));
+
+let increaseComputerScore = (function(computerScore) {
+    return function() {
+        return ++computerScore;
+    }
+}(0));
+
+function checkGameEnd(player, score) {
+    if (player === 'human' && score === 5) {
+        announceWinner.textContent = `The winner is: Player!`;
+    } 
+    else if (player === 'computer' && score === 5) {
+        announceWinner.textContent = `The winner is: Computer!`
+    }
+
+}
+function score(roundWinner) {
+    switch (roundWinner) {
+        case 'human':
+            const tempHumanScore = increaseHumanScore()
+            playerScore.textContent = `Player Score: ${tempHumanScore}`;
+            checkGameEnd('human', tempHumanScore);
+            break;
+        case 'computer':
+            const tempComputerScore = increaseComputerScore();
+            computerScore.textContent = `Computer Score: ${tempComputerScore}`;
+            checkGameEnd('computer', tempComputerScore);
+            break;
+    }
+}
+
 function checkForWinner(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        console.log(`Draw, both of you chose ${humanChoice}`);
+        resultDiv.textContent = `Result: Draw! You both chose ${humanChoice}`;
         return 'Draw';
     }
 
     else if (humanChoice === 'rock') {
         switch (computerChoice) {
             case 'paper':
-                console.log('You Lose! Paper beats Rock');
-                return 'computer';
+                resultDiv.textContent = 'Result: Computer wins! Paper beats Rock!';
+                score('computer');
+                break;
             case 'scissors':
-                console.log('You Win! Rock beats Scissors');
-                return 'human';
+                resultDiv.textContent = 'Result: You win! Rock beats Scissors';
+                score('human');
+                break;
         }
     }
 
     else if (humanChoice === 'paper') {
         switch (computerChoice) {
             case 'scissors':
-                console.log('You Lose! Scissors beats Paper');
-                return 'computer';
+                resultDiv.textContent = 'Result: Computer wins! Scissors beats Paper!';
+                score('computer');
+                break;
             case 'rock':
-                console.log('You Win! Paper beats Rock')
-                return 'human';
+                resultDiv.textContent = 'Result: You win! Paper beats Rock!';
+                score('human');
+                break;
         }
     }
 
     else if (humanChoice === 'scissors') {
         switch (computerChoice) {
             case 'rock':
-                console.log('You Lose! Rock beats Scissors');
-                return 'computer';
+                resultDiv.textContent = 'Result: Computer wins! Rock beats Scissors!';
+                score('computer');
+                break;
             case 'paper':
-                console.log('You Win! Scissors beats Paper');
-                return 'human';
+                resultDiv.textContent = 'Result: You win! Scissors beats Paper';
+                score('human');
+                break;
         }
     }
 
@@ -60,6 +98,10 @@ function checkForWinner(humanChoice, computerChoice) {
 const rockBtn = document.querySelector('.rockBtn');
 const paperBtn = document.querySelector('.paperBtn');
 const scissorsBtn = document.querySelector('.ScissorsBtn');
+const resultDiv = document.querySelector('.resultDiv');
+const playerScore = document.querySelector('.playerScore');
+const computerScore = document.querySelector('.computerScore');
+const announceWinner = document.querySelector('.announceWinner');
 
 rockBtn.addEventListener('click', () => {
     playRound('rock', getComputerChoice());
